@@ -1,97 +1,48 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+250429(화)
+#3.1
+TodoApp 프로젝트 기반 다지기
 
-# Getting Started
+1. 프로젝트 생성
+   npx @react-native-community/cli@latest init TodoApp
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+2. 오늘 날짜 가져오기
+   const today = new Date();
 
-## Step 1: Start Metro
+- 참고: http://bit.ly/mdn-date
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+const year = today.getFullYear();
+const month = today.getMonth()+1;  
+const day = today.getDate();
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- month는 0~11을 가져오므로 +1 해주기
 
-```sh
-# Using npm
-npm start
+3. StatusBar
+   iOS와 Android를 모두 적용시키기 위해 서드 파티 라이브러리 사용
 
-# OR using Yarn
-yarn start
-```
+yarn add react-native-safe-area-context
 
-## Step 2: Build and run your app
+- 참고: https://github.com/th3rdwave/react-native-safe-area-context
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+SafeAreaProvider, SafeAreaView 사용
 
-### Android
+- 이때 SafeAreaView는 해당 라이브러리의 요소를 사용할 것
 
-```sh
-# Using npm
-npm run android
+const {top} = useSafeAreaInsets();
 
-# OR using Yarn
-yarn android
-```
+- StatusBar의 요소를 가져올 수 있음
 
-### iOS
+4. Image 컴포넌트
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+<Image source={require('...')} resizemode="..." />
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+resizemode는 총 5가지 설정이 있음.
 
-```sh
-bundle install
-```
+cover: 기본값. 이미지의 가로, 세로 비율을 유지한 상태로 이미지를 리사이징. 이미지와 뷰의 비율이 일치하지 않을 경우 이미지를 자름.
 
-Then, and every time you update your native dependencies, run:
+contain: 이미지의 비율을 유지하여 이미지의 모든 영역이 뷰 안에 보이도록 리사이징
 
-```sh
-bundle exec pod install
-```
+stretch: 뷰의 크기, 비율대로 이미지의 비율도 리사이징
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+repeat: 뷰의 크기가 이미지보다 크면 바둑판식으로 이미지 반복
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+center: 이미지를 뷰의 중앙에 둠. 뷰가 이미지보다 크면 이미지는 원본 사이즈 그대로 유지.
