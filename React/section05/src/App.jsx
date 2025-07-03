@@ -1,15 +1,33 @@
+import { useState } from "react";
 import "./App.css";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Main from "./components/Main";
 
 // 컴포넌트의 첫 글자는 대문자
 function App() {
+  const [count, setCount] = useState(0);
+  const [light, setLight] = useState("OFF");
+
   return (
     <>
-      <Header />
-      <Main />
-      <Footer />
+      <div>
+        <h1>{light}</h1>
+        <button
+          onClick={() => {
+            setLight(light === "ON" ? "OFF" : "ON");
+          }}
+        >
+          {light === "ON" ? "끄기" : "켜기"}
+        </button>
+      </div>
+      <div>
+        <h1>{count}</h1>
+        <button
+          onClick={() => {
+            setCount(count + 1);
+          }}
+        >
+          +
+        </button>
+      </div>
     </>
   );
 }
