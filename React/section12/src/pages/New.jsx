@@ -13,7 +13,12 @@ const New = () => {
   usePageTitle("새 일기 쓰기");
 
   const onSubmit = (input) => {
-    onCreate(input.createdDate.getTime(), input.emotionId, input.content);
+    onCreate(
+      input.createdDate.getTime(),
+      input.emotionId,
+      input.content,
+      input.uploadedImage
+    );
     nav("/", { replace: true });
   };
   return (

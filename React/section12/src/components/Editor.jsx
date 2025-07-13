@@ -14,7 +14,10 @@ const Editor = ({ onSubmit, initData }) => {
     createdDate: new Date(),
     emotionId: 3,
     content: "",
+    uploadedImage: null,
   });
+
+  const [isWebView, setIsWebView] = useState(false);
 
   useEffect(() => {
     if (initData) {
@@ -24,6 +27,32 @@ const Editor = ({ onSubmit, initData }) => {
       });
     }
   }, [initData]);
+
+  // WebView 환경 체크
+  useEffect(() => {
+    if (window.ReactNativeWebView) {
+      setIsWebView(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const listener = (e) => {
+      if (typeof e.data === "string" && e.data.startsWith("file://")) {
+        setInput((prev) => ({
+          ...prev,
+          uploadedImage: e.data,
+        }));
+      }
+    };
+
+    window.addEventListener("message", listener);
+    document.addEventListener("message", listener);
+
+    return () => {
+      window.removeEventListener("message", listener);
+      document.removeEventListener("message", listener);
+    };
+  }, []);
 
   const onChangeInput = (e) => {
     let name = e.target.name;
@@ -36,6 +65,11 @@ const Editor = ({ onSubmit, initData }) => {
       ...input,
       [name]: value,
     });
+  };
+
+  // WebView에 업로드 요청
+  const onClickUploadButton = () => {
+    window.ReactNativeWebView.postMessage("OPEN_IMAGE_PICKER");
   };
 
   const onClickSubmitButton = () => {
@@ -79,6 +113,17 @@ const Editor = ({ onSubmit, initData }) => {
           placeholder="오늘은 어땠나요?"
         />
       </section>
+      {isWebView && (
+        <section className="image_section">
+          <h4>사진 업로드</h4>
+          <Button text={"사진 선택"} onClick={onClickUploadButton} />
+          {input.uploadedImage && (
+            <div style={{ marginTop: "10px" }}>
+              <img src={input.uploadedImage} style={{ width: "200px" }} />
+            </div>
+          )}
+        </section>
+      )}
       <section className="button_section">
         <Button text={"취소하기"} onClick={() => nav(-1)} />
         <Button

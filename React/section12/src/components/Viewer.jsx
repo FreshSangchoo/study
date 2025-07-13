@@ -2,10 +2,17 @@ import { getEmotionImage } from "../util/get-emotion-image";
 import "./Viewer.css";
 import { emotionList } from "../util/constants";
 
-const Viewer = ({ emotionId, content }) => {
+const Viewer = ({ emotionId, content, uploadedImage }) => {
   const emotionItem = emotionList.find(
     (item) => String(item.emotionId) === String(emotionId)
   );
+
+  console.log(emotionId, content, uploadedImage);
+  if (window.ReactNativeWebView) {
+    window.ReactNativeWebView.postMessage(
+      "Viewer uploadedImage: " + uploadedImage
+    );
+  }
 
   return (
     <div className="Viewer">
@@ -16,6 +23,17 @@ const Viewer = ({ emotionId, content }) => {
           <div>{emotionItem.emotionName}</div>
         </div>
       </section>
+      {!uploadedImage && <div>웹뷰 아님</div>}
+      {uploadedImage && (
+        <section className="uploaded_image_section">
+          <h4>오늘의 사진</h4>
+          <img
+            src={uploadedImage}
+            alt="Uploaded"
+            style={{ width: "300px", marginTop: "10px" }}
+          />
+        </section>
+      )}
       <section className="content_section">
         <h4>오늘의 일기</h4>
         <div className="content_wrapper">

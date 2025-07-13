@@ -83,7 +83,7 @@ function App() {
   // localStorage.clear();
 
   // 새로운 일기 추가
-  const onCreate = (createdDate, emotionId, content) => {
+  const onCreate = (createdDate, emotionId, content, uploadedImage) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -91,12 +91,13 @@ function App() {
         createdDate,
         emotionId,
         content,
+        uploadedImage,
       },
     });
   };
 
   // 기존 일기 수정
-  const onUpdate = (id, createdDate, emotionId, content) => {
+  const onUpdate = (id, createdDate, emotionId, content, uploadedImage) => {
     dispatch({
       type: "UPDATE",
       data: {
@@ -104,6 +105,7 @@ function App() {
         createdDate,
         emotionId,
         content,
+        uploadedImage,
       },
     });
   };

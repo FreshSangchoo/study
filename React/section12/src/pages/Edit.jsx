@@ -28,7 +28,8 @@ const Edit = () => {
         input.id,
         input.createdDate.getTime(),
         input.emotionId,
-        input.content
+        input.content,
+        input.uploadedImage
       );
       nav("/", { replace: true });
     }
