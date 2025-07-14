@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // es 버전 관리
+    "skipLibCheck": true,
+    "module": "esnext", // commonjs와 esmodule 중 무엇으로 지정할 지
+    "outDir": "dist", // 컴파일 시 생기는 js파일 위치할 폴더 지정
+    "strict": false, // 타입 검사를 얼마나 엄격하게 할지
+    // 모든 ts파일은 글로벌 모듈로 취급받음
+    // 때문에 개별로 export, import같은 모듈 시스템을 하나 이상 사용해줘야함.
+    // 이걸 자동으로 해주는 방식이 force
+    "moduleDetection": "force"
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["src"] // src를 스코프로 컴파일하겠다
+}
